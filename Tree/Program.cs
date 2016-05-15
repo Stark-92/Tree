@@ -39,7 +39,7 @@ namespace Tree
             }
         }
 
-        // leave is every node that doesn't has any child
+        // leaf is every node that doesn't has any child
         private int CalculateLeaves ()
         {
             if (this.parents == null || this.parents.Length == 0)
