@@ -20,22 +20,19 @@ namespace Tree
         {
             if(this.parents==null|| this.parents.Length==0 || this.parents.Length == 1)
             {
+                //Height =0
                 return 0;
             }
             else
             {
+                //Start from last child backward to its parents
                 int height = 0;
-                int[] children = new int[this.parents.Length];
-                
+                int i = this.parents.Length-1;
 
-                for(int i=0; i<this.parents.Length;i++)
+                while(parents[i]>=0)
                 {
-                    children[i] = 0; //Init the array
-
-                    for(int j=i; j<this.parents.Length;j++)
-                    {
-                        //if()
-                    }
+                    height++;
+                    i = parents[i];
                 }
 
                 return height;
@@ -45,43 +42,58 @@ namespace Tree
         // leave is every node that doesn't has any child
         private int CalculateLeaves ()
         {
-            if(this.parents==null||this.parents.Length==0)
+            if (this.parents == null || this.parents.Length == 0)
             {
                 return 0;
             }
-            else if(this.parents.Length==1)
+            else if (this.parents.Length == 1)
             {
                 return 1;
             }
             else
             {
-                int leaves = 0;
-                bool isparent = false;
-                for(int i=0; i<this.parents.Length;i++)
-                {
-                    for (int j=i;j<this.parents.Length;j++)
-                    {
-                        if(i==this.parents[j])
-                        {
-                            isparent = true;
-                        }
-                    }
+                //Count leaves from root to last node
+                /* int leaves = 0;
+                 bool isparent = false;
+                 for(int i=0; i<this.parents.Length;i++)
+                 {
+                     for (int j=i;j<this.parents.Length;j++)
+                     {
+                         if(i==this.parents[j])
+                         {
+                             isparent = true;
+                         }
+                     }
 
-                    if(!isparent)
+                     if(!isparent)
+                     {
+                         leaves += 1;                       
+                     }
+                     isparent = false;
+                 }
+                 return leaves;*/
+
+                //leaves= all nodes - parents
+                int leaves = this.parents.Length;
+
+                for (int i = 1; i < this.parents.Length; i++)
+                {
+                    if (this.parents[i - 1] != this.parents[i])
                     {
-                        leaves += 1;                       
+                        leaves--;
                     }
-                    isparent = false;
                 }
+
                 return leaves;
             }
         }
 
         static void Main(string[] args)
         {
-            Tree tree = new Tree(new int[] { -1, 0, 0, 1, 1, 2, 2, 3});
-            Console.WriteLine(tree.CalculateHeight());
-            Console.WriteLine(tree.CalculateLeaves());
+            //Tree tree = new Tree(new int[] { -1, 0, 0, 1, 1, 2, 2, 3});
+            Tree tree = new Tree(new int[] { -1, 0, 0, 1, 2, 3, 4, 6});
+            Console.WriteLine("Tree height = "+tree.CalculateHeight());
+            Console.WriteLine("Tree leaves = " + tree.CalculateLeaves());
             Console.ReadKey();
         }
     }
